@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:with="title='操作成功',active='userPage'">
+<header th:replace="common/header::headerFragment(${title},${active})"></header>
+<body class="layui-layout-body">
+<div class="layui-layout layui-layout-admin">
+    <div style=" position: absolute;top: 50%;left: 50%;">
+        <button id="successBtn" type="button" class="layui-btn">操作成功</button>
+    </div>
+</div>
+<script th:src="@{/static/layui/layui.js}" charset="utf-8"></script>
+<script>
+    layui.use(['jquery'], function(){
+        var $ = layui.jquery;
+
+        $("#successBtn").on('click', function () {
+            //关闭父级页面的表格
+            parent.layui.table.reload('tableList');
+//            parent.location.reload();
+            //先得到当前iframe层的索引
+            var index = parent.layer.getFrameIndex(window.name);
+            //再执行关闭
+            parent.layer.close(index);
+        });
+    });
+</script>
+</body>
+</html>

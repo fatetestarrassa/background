@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:with="title='操作失败',active='userPage'">
+<header th:replace="common/header::headerFragment(${title},${active})"></header>
+<body class="layui-layout-body">
+<div class="layui-layout layui-layout-admin">
+    <div style="margin: 10px 15px 10px 15px;text-align: center" >
+        <p th:text="${message}"/>
+    </div>
+</div>
+<script th:src="@{/static/layui/layui.js}" charset="utf-8"></script>
+<script>
+    layui.use(['jquery'], function(){
+
+    });
+</script>
+</body>
+</html>

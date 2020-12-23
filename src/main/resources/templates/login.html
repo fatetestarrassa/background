@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Login</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/static/css/login.css}"/>
+</head>
+<body>
+    <div id="login">
+        <h1>Login</h1>
+        <form class="layui-form" method="post" action="login">
+            <input id="name" type="text" required  lay-verify="userName" lay-verType="tips" placeholder="用户名" name="userName"></input>
+            <input id="password" type="password" required  lay-verify="pass" lay-verType="tips" placeholder="密码" name="password"></input>
+            <button class="but" lay-submit lay-filter="sub-form" >登录</button>
+        </form>
+    </div>
+    <script th:src="@{/static/layui/layui.js}" charset="utf-8"></script>
+    <script type="text/javascript">
+        layui.use(['form', 'jquery'], function () {
+            var $ = layui.jquery;
+            var form = layui.form;
+            $("body").keydown(function() {
+                if (event.keyCode == "13") {//keyCode=13是回车键
+                    $('.but').click();
+                }
+            });
+
+            form.verify({
+                //函数方式
+                userName: function (value,item) {
+                    if(!value){
+                        return '用户名不能为空';
+                    }
+                    if(value.length < 5|| value.length > 24){
+                        return '用户名必须5到24位';
+                    }
+                    if(!new RegExp("^[a-zA-Z0-9_\u4e00-\u9fa5\\s·]+$").test(value)){
+                        return '用户名不能有特殊字符';
+                    }
+                    if(/(^\_)|(\__)|(\_+$)/.test(value)){
+                        return '用户名首尾不能出现下划线\'_\'';
+                    }
+                    if(/^\d+\d+\d$/.test(value)){
+                        return '用户名不能全为数字';
+                    }
+                }
+                //正则方式：数组的两个值分别代表：[正则匹配、匹配不符时的提示文字]
+                ,pass: [
+                    /^[\S]{6,12}$/
+                    ,'密码必须6到12位，且不能出现空格'
+                ]
+            });
+
+            form.on('submit(sub-form)',function(data) {
+                $.ajax({
+                    url: "login",
+                    type: "post",
+                    async: false,
+                    data: data.field,
+                    success: function (data) {
+                        var returncode = data.returncode;
+                        if (returncode === 0) {
+                            window.location.href = "index";
+                        } else {
+                            layer.alert(data.message);
+                        }
+                    }
+                });
+                return false; //false阻止表单跳转。如果需要表单跳转，true
+            });
+
+
+        })
+    </script>
+</body>
+</html>

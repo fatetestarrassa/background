@@ -1,0 +1,109 @@
+spring:
+  datasource:
+    type: com.alibaba.druid.pool.DruidDataSource
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://39.100.17.54:3306/background?useUnicode=true&characterEncoding=UTF-8&allowMultiQueries=true&useSSL=false&serverTimezone=UTC
+    username: background
+    password: 123456
+    druid:
+      #初始化大小，默认0
+      initial-size: 5
+      #最大连接池数量，默认8
+      max-active: 20
+      #最小连接池数量
+      min-idle: 5
+      #获取连接时最大等待时间，单位毫秒
+      max-wait: 2000
+      #默认false：是否缓存preparedStatement，也就是PSCache。对支持游标的数据库提升巨大，如oracle。mysql建议关闭
+      pool-prepared-statements: false
+      #每个连接最大缓存preparedStatement数量,默认-1
+      max-pool-prepared-statement-per-connection-size: -1
+      #用来检测连接是否有效的sql的一个查询语句
+      validation-query: select 1
+      #检测有效sql的超时时间，单位秒
+      validation-query-timeout: 1
+      #申请连接时执行validation-query检测是否有效，true会降低性能
+      test-on-borrow: false
+      #归还连接时执行validation-query检测是否有效，true会降低性能
+      test-on-return: false
+      #申请连接的时候检测，如果空闲时间大于timeBetweenEvictionRunsMillis，执行validationQuery检测连接是否有效
+      test-while-idle: true
+      #连接池中的minIdle数量以内的连接，空闲时间超过minEvictableIdleTimeMillis，则会执行keepAlive操作
+      keep-alive: false
+      #1) Destroy线程会检测连接的间隔时间，如果连接空闲时间大于等于minEvictableIdleTimeMillis则关闭物理连接。 2) testWhileIdle的判断依据
+      time-between-eviction-runs-millis: 300000
+      #保持空闲不被驱逐的最小时间
+      min-evictable-idle-time-millis: 40000
+      #监控统计的stat,以及防sql注入的wall
+      filters: stat,wall
+      #Spring监控AOP切入点，如x.y.z.service.*,配置多个英文逗号分隔
+      aop-patterns: com.sunbing.backgroundground.service.impl.*
+      #监控配置
+      web-stat-filter:
+        #启用监控
+        enabled: true
+        #添加过滤规则
+        url-pattern: /*
+        #忽略过滤的格式
+        exclusions:
+      #StatViewServlet配置:提供监控页面和Json api
+      stat-view-servlet:
+        #启用
+        enabled: true
+        #过滤规则
+        url-pattern: /druid/*
+        #是否允许充值数据
+        reset-enable: false
+        #登录用户名
+        login-username: druid
+        #登录密码
+        login-password: druid
+        #ip白名单
+        allow: 127.0.0.1
+        #ip黑名单
+        deny:
+  thymeleaf:
+    #是否启用缓存，默认true
+    cache: false
+    #渲染前检查模板是否存在，默认true
+    check-template: true
+    #检查模板位置是否存在，默认true
+    check-template-location: true
+    #是否允许Thymeleaf视图方案作为web框架,默认true
+    enabled: true
+    #是否允许spring-el表达式，默认false
+    enable-spring-el-compiler: false
+    #编码，默认utf-8
+    encoding: UTF-8
+    #排除的视图解析名集合，用逗号分隔
+    #excluded-view-names:
+    #模板模式，默认HTML
+    mode: HTML
+    #路径前缀，默认classpath:/templates/
+    prefix: classpath:/templates/
+    #是否应在复选框元素本身之前呈现用作表单标记的隐藏表单输入，默认false
+    render-hidden-markers-before-checkboxes: false
+    servlet:
+      #内容类型，默认text/html
+      content-type: text/html
+      #是否应该尽可能的写入输出或者缓冲直到模板处理完成，默认true
+      produce-partial-output-while-processing: true
+    #后缀
+    suffix: .html
+    #模板解析器在链中的顺序,默认情况下,模板解析器位于链中的第一位,从1开始,并且仅在定义了其他TemplateResolver的情况下才能设置
+    #template-resolver-order: 1
+    #可以解析的视图名称的逗号分隔列表
+    #excluded-view-names:
+  devtools:
+    restart:
+      enabled: true
+      additional-paths: src/main/java
+  #mvc:
+    #static-path-pattern: /static/**
+
+mybatis-plus:
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+
+login:
+  salt: background
