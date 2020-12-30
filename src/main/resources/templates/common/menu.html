@@ -8,7 +8,7 @@
                 <li class="layui-nav-item layui-nav-itemed">
                     <a class="" href="javascript:;">用户管理</a>
                     <dl class="layui-nav-child">
-                        <dd th:class="${active}=='userPage'?'layui-this':''"><a href="/back/user/listByPage">用户列表</a></dd>
+                        <dd th:class="${active}=='userPage'?'layui-this':''"><a th:href="@{/back/user/listByPage}">用户列表</a></dd>
                     </dl>
                 </li>
                 <li class="layui-nav-item">
