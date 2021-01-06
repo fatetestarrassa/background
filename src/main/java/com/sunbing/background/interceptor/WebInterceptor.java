@@ -2,6 +2,7 @@ package com.sunbing.background.interceptor;
 
 import com.sunbing.background.entity.BackUser;
 import com.sunbing.background.entity.BackUserContext;
+import com.sunbing.background.utils.IPUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.lang.Nullable;
 import org.springframework.web.servlet.HandlerInterceptor;
@@ -37,6 +38,7 @@ public class WebInterceptor implements HandlerInterceptor {
     public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler, @Nullable ModelAndView modelAndView) throws Exception {
 //        log.info("postHandle ............");
         request.setAttribute("currentUser",request.getSession().getAttribute("currentUser"));
+        log.info("ip地址:{}",IPUtil.getClientIpAddr(request));
     }
 
     @Override
